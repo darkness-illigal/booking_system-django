@@ -1,0 +1,39 @@
+{% extends 'booking_app/base.html' %}
+{% load static %}
+
+{% block title %}Оновлення бронювання{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Оновлення статусу бронювання #{{ object.id }}</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="id_status" class="form-label">Статус</label>
+                        <select name="status" class="form-select" id="id_status">
+                            {% for value, display in form.fields.status.choices %}
+                            <option value="{{ value }}" {% if value == form.initial.status %}selected{% endif %}>
+                                {{ display }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{% url 'booking_list' %}" class="btn btn-secondary">
+                            <i class="bi bi-arrow-left"></i> Назад
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-save"></i> Зберегти
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

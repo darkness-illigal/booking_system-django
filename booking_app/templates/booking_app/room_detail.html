@@ -1,0 +1,61 @@
+{% extends 'booking_app/base.html' %}
+{% load static %}
+
+{% block title %}{{ room.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        {% if room.image %}
+        <img src="{{ room.image.url }}" class="img-fluid rounded mb-3" alt="{{ room.name }}">
+        {% else %}
+        <div class="bg-secondary d-flex align-items-center justify-content-center rounded mb-3" style="height: 300px;">
+            <i class="bi bi-image text-white" style="font-size: 3rem;"></i>
+        </div>
+        {% endif %}
+        
+        <h2>{{ room.name }}</h2>
+        <p>{{ room.description }}</p>
+        
+        <div class="mb-3">
+            <h5>Особливості:</h5>
+            <ul class="list-group">
+                {% for feature in room.features.all %}
+                <li class="list-group-item">
+                    <i class="bi bi-check-circle-fill text-success"></i> {{ feature.name }}
+                </li>
+                {% empty %}
+                <li class="list-group-item">Немає особливостей</li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Інформація</h5>
+                <ul class="list-unstyled">
+                    <li><i class="bi bi-people"></i> Місткість: до {{ room.capacity }} осіб</li>
+                    <li><i class="bi bi-cash-coin"></i> Ціна: {{ room.price_per_hour }} грн/год</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Забронювати кімнату</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary w-100 mt-3">
+                        <i class="bi bi-send-check"></i> Надіслати запит
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

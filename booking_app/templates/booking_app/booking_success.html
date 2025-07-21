@@ -1,0 +1,26 @@
+{% extends 'booking_app/base.html' %}
+{% load static %}
+
+{% block title %}Успішне бронювання{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0"><i class="bi bi-check-circle"></i> Бронювання успішно створено!</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <i class="bi bi-envelope-check" style="font-size: 4rem; color: #198754;"></i>
+                </div>
+                <h5>Дякуємо за ваше бронювання!</h5>
+                <p class="mb-4">На вказану вами електронну адресу було відправлено листа з підтвердженням.</p>
+                <a href="{% url 'home' %}" class="btn btn-primary">
+                    <i class="bi bi-house"></i> На головну
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
