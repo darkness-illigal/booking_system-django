@@ -3,6 +3,9 @@ from django.core.exceptions import ValidationError
 from django.utils import timezone
 from .models import Booking, Room
 import datetime
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 class BookingForm(forms.ModelForm):
     class Meta:
@@ -47,6 +50,23 @@ class BookingForm(forms.ModelForm):
                 raise ValidationError("Обраний час вже зайнято. Будь ласка, оберіть інший час.")
 
         return cleaned_data
+    
+
+
+class RegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True, label="Email")
+    first_name = forms.CharField(required=True, label="Ім'я")
+    last_name = forms.CharField(required=True, label="Прізвище")
+
+    class Meta:
+        model = User
+        fields = ("username", "first_name", "last_name", "email", "password1", "password2")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({'class': 'form-control'})
 
 class RoomAdminForm(forms.ModelForm):
     class Meta:

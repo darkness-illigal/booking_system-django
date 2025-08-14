@@ -110,3 +110,25 @@ class UpdateBookingStatusView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
         response = super().form_valid(form)
         messages.success(self.request, f"Статус бронювання #{self.object.id} оновлено до {self.object.get_status_display()}")
         return response
+    
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.contrib.auth import login
+from .forms import RegisterForm
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Реєстрація успішна!')
+            return redirect('home')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+    else:
+        form = RegisterForm()
+    
+    return render(request, 'booking_app/registration/register.html', {'form': form})

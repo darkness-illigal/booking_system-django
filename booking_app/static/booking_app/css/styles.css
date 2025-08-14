@@ -18,3 +18,21 @@ body {
 .navbar {
     margin-bottom: 30px;
 }
+
+.card {
+    margin-top: 2rem;
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+.card-header {
+    padding: 1.5rem;
+}
+.form-control {
+    margin-bottom: 0.5rem;
+}
+.form-text {
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+.btn-link {
+    text-decoration: none;
+}
